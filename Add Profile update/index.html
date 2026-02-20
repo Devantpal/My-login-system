@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase Auth</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+
+  <div class="tabs">
+    <button id="loginTab" class="active">Login</button>
+    <button id="registerTab">Register</button>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <div id="loginForm">
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+
+    <p class="forgot-password" onclick="resetPassword()">Forgot Password?</p>
+
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- REGISTER FORM -->
+  <div id="registerForm" class="hidden">
+
+    <input type="email" id="registerEmail" placeholder="Email">
+    <input type="password" id="registerPassword" placeholder="Password">
+
+    <input type="tel" id="registerMobile" placeholder="Mobile Number">
+
+    <select id="registerGender">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <button onclick="register()">Register</button>
+
+  </div>
+
+  <div class="divider">OR</div>
+
+  <button class="google-btn" onclick="googleLogin()">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="18">
+    Sign in with Google
+  </button>
+
+</div>
+
+<div id="toastContainer"></div>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>

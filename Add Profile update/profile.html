@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <h2>MyApp</h2>
+    <ul>
+      <li onclick="goDashboard()">Dashboard</li>
+      <li onclick="goProfile()">Profile</li>
+      <li onclick="logout()">Logout</li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1>Edit Profile</h1>
+
+    <div class="card-box">
+      <input type="text" id="editName" placeholder="Full Name">
+      <input type="tel" id="editMobile" placeholder="Mobile">
+      <select id="editGender">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <button onclick="updateProfile()">Update Profile</button>
+    </div>
+
+  </main>
+
+</div>
+
+<script type="module" src="profile.js"></script>
+</body>
+</html>
