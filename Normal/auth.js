@@ -1,6 +1,5 @@
 import { auth, db } from "./firebase.js";
-
-import {
+import { 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
@@ -9,42 +8,54 @@ import {
   signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { doc, setDoc } 
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* Toast */
+
+
+/* ---------------- TOAST FUNCTION ---------------- */
 function showToast(message, type = "info") {
   const container = document.getElementById("toastContainer");
+
   const toast = document.createElement("div");
   toast.classList.add("toast", type);
   toast.innerText = message;
+
   container.appendChild(toast);
+
   setTimeout(() => toast.remove(), 3000);
 }
 
-/* Error Handler */
+/* ---------------- ERROR HANDLER ---------------- */
 function handleAuthError(error) {
   switch (error.code) {
+
     case "auth/email-already-in-use":
       showToast("Email already registered", "error");
       break;
+
     case "auth/invalid-email":
       showToast("Invalid email format", "error");
       break;
+
     case "auth/weak-password":
       showToast("Password must be at least 6 characters", "error");
       break;
+
     case "auth/user-not-found":
-      showToast("User not found", "error");
+      showToast("No account found with this email", "error");
       break;
+
     case "auth/wrong-password":
       showToast("Incorrect password", "error");
       break;
+
     default:
       showToast("Something went wrong", "error");
   }
 }
 
-/* Tab Switching */
+/* ---------------- TAB SWITCHING ---------------- */
 const loginTab = document.getElementById("loginTab");
 const registerTab = document.getElementById("registerTab");
 const loginForm = document.getElementById("loginForm");
@@ -64,16 +75,14 @@ registerTab.onclick = () => {
   loginTab.classList.remove("active");
 };
 
-/* REGISTER */
+/* ---------------- REGISTER ---------------- */
 window.register = async function () {
 
   const email = document.getElementById("registerEmail").value;
   const password = document.getElementById("registerPassword").value;
-  const mobile = document.getElementById("registerMobile").value;
-  const gender = document.getElementById("registerGender").value;
 
-  if (!email || !password || !mobile || !gender) {
-    showToast("All fields are required", "error");
+  if (!email || !password) {
+    showToast("Please fill all fields", "error");
     return;
   }
 
@@ -84,21 +93,18 @@ window.register = async function () {
 
     await setDoc(doc(db, "users", userCredential.user.uid), {
       email,
-      mobile,
-      gender,
-      role: "user",
       provider: "email",
       createdAt: new Date()
     });
 
-    showToast("Verification email sent!", "success");
+    showToast("Verification email sent! Check Gmail.", "success");
 
   } catch (error) {
     handleAuthError(error);
   }
 };
 
-/* LOGIN */
+/* ---------------- LOGIN ---------------- */
 window.login = async function () {
 
   const email = document.getElementById("loginEmail").value;
@@ -108,7 +114,7 @@ window.login = async function () {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
     if (!userCredential.user.emailVerified) {
-      showToast("Verify your email first", "error");
+      showToast("Please verify your email first", "error");
       return;
     }
 
@@ -123,7 +129,25 @@ window.login = async function () {
   }
 };
 
-/* GOOGLE LOGIN */
+window.resetPassword = async function () {
+
+  const email = document.getElementById("loginEmail").value;
+
+  if (!email) {
+    showToast("Please enter your email first", "error");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showToast("Password reset email sent! Check Gmail.", "success");
+
+  } catch (error) {
+    handleAuthError(error);
+  }
+};
+
+/* ---------------- GOOGLE LOGIN ---------------- */
 window.googleLogin = async function () {
 
   const provider = new GoogleAuthProvider();
@@ -136,7 +160,6 @@ window.googleLogin = async function () {
       email: user.email,
       name: user.displayName,
       photo: user.photoURL,
-      role: "user",
       provider: "google",
       createdAt: new Date()
     }, { merge: true });
@@ -147,23 +170,6 @@ window.googleLogin = async function () {
       window.location.href = "dashboard.html";
     }, 1000);
 
-  } catch (error) {
-    handleAuthError(error);
-  }
-};
-
-/* RESET PASSWORD */
-window.resetPassword = async function () {
-  const email = document.getElementById("loginEmail").value;
-
-  if (!email) {
-    showToast("Enter email first", "error");
-    return;
-  }
-
-  try {
-    await sendPasswordResetEmail(auth, email);
-    showToast("Reset email sent!", "success");
   } catch (error) {
     handleAuthError(error);
   }

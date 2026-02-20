@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #4e73df, #1cc88a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 30px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background: #ddd;
+}
+
+.tabs .active {
+  background: #4e73df;
+  color: white;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #4e73df;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.divider {
+  text-align: center;
+  margin: 15px 0;
+  color: #777;
+}
+
+.google-btn {
+  background: white;
+  color: #444;
+  border: 1px solid #ddd;
+}
+
+.dashboard {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 13px;
+  color: #4e73df;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+#toastContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.toast {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  color: white;
+}
+
+.toast.success { background: #1cc88a; }
+.toast.error { background: #e74a3b; }
+.toast.info { background: #36b9cc; }
